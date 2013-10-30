@@ -75,6 +75,19 @@ MtGox.prototype.orderresult = function(id, type, cb) {
   })
 }
 
+MtGox.prototype.trades = function(since, currency, cb) {
+  request({
+    url: this.options.url + '/1/' + currency + '/trades?since=' + since,
+    json: true,
+    headers: {
+      'User-Agent': 'hello'
+    }
+  }, function(err, res, data) {
+    if (err) return cb(err)
+    cb(null, data)
+  })
+}
+
 
 MtGox.prototype.depth = function(market, cb) {
     request({
