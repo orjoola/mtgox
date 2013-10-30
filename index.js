@@ -119,20 +119,29 @@ MtGox.prototype.market = function(market, cb) {
     })
 }
 
+
+
 MtGox.prototype.error = function(result) {
     if (result.result == 'success') return
     return new Error('API error: ' + (result.error || 'Unspecified'))
 }
 
 MtGox.prototype.order = function(order, cb) {
-    this.query('/1/' + order.market + '/private/order/add', {
-        type: order.side,
-        price_int: +num(order.price).mul(1e5),
-        amount_int: +num(order.volume).mul(1e8)
-    }, function(err, res) {
-        if (err) return cb(err)
-        cb(null, res)
-    })
+  this.query('/1/' + order.market + '/private/order/add', {
+    type: order.side,
+    price_int: +num(order.price).mul(1e5),
+    amount_int: +num(order.volume).mul(1e8)
+  }, function(err, res) {
+    if (err) return cb(err)
+    cb(null, res)
+  })
+}
+
+MtGox.prototype.privateinfo = function(cb) {
+  this.query('/1/generic/private/info', {}, function(err, res) {
+    if (err) return cb(err)
+    cb(null, res)
+  })
 }
 
 MtGox.prototype.cancel = function(id, cb) {
