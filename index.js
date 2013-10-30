@@ -67,7 +67,8 @@ MtGox.prototype.orders = function(cb) {
 
 MtGox.prototype.orderresult = function(id, type, cb) {
   this.query('/1/BTCUSD/private/order/result', {
-    oid: id
+    oid: id,
+    type: type
   }, function(err, res) {
     if (err) return cb(err)
     cb(null, res)
