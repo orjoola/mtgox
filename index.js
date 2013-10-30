@@ -65,6 +65,16 @@ MtGox.prototype.orders = function(cb) {
     })
 }
 
+MtGox.prototype.orderresult = function(id, type, cb) {
+  this.query('/1/BTCUSD/private/order/result', {
+    oid: id
+  }, function(err, res) {
+    if (err) return cb(err)
+    cb(null, res)
+  })
+}
+
+
 MtGox.prototype.depth = function(market, cb) {
     request({
         url: this.options.url + '/1/' + market + '/depth',
